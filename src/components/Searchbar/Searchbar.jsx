@@ -11,32 +11,26 @@ import {
   SearchFormInput,
 } from './Searchbar.styled';
 
-class SearchBar extends Component {
-  state = {
-    value: '',
+function SearchBar({ onSubmit}) {
+  const [value, setValue] = useState('');
+
+  const handleChange = e => {
+    setValue(e.target.value.toLowerCase());
   };
-
-
-  handleChange = e => {
-    this.setState({ value: e.target.value.toLowerCase() });
-  };
-
 
   handleSubmit = evt => {
     evt.preventDefault();
-    if (this.state.value.trim() === '') {
+    if (value.trim() === '') {
       alert('Введите данные для поиска');
       return;
     }
 
-    this.props.onSubmit({ ...this.state });
+    onSubmit({ value });
   };
 
-  render() {
-    const { value } = this.state;
     return (
       <Searchbar>
-        <SearchForm onSubmit={this.handleSubmit}>
+        <SearchForm onSubmit={handleSubmit}>
           <SearchFormButton type="submit">
             <GrSearch />
           </SearchFormButton>
@@ -46,13 +40,12 @@ class SearchBar extends Component {
             autoFocus
             placeholder="Search images and photos"
             value={value}
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
         </SearchForm>
       </Searchbar>
     );
   }
-}
 
 export default SearchBar;
 
