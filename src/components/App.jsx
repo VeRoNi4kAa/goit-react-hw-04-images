@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
@@ -14,7 +14,7 @@ import Modal from './Modal';
 
 const PIXABAY_KEY = '24537625-47620fa03ad46ed0668a7b060';
 
-function App () {
+function App() {
   const [value, setValue] = useState('');
   const [images, setImages] = useState([]);
   const [page, setPage] = useState(1);
@@ -28,25 +28,25 @@ function App () {
       return;
     }
     setStateMashine('loading');
-      axios
-        .get(
-          `https://pixabay.com/api/?q=${newValue.value}&page=${newPage}&key=${PIXABAY_KEY}&image_type=photo&orientation=horizontal&per_page=12`
-        )
-        .catch(error => console.log('Error', error.message))
-        .then(responce => {
-          const images = responce.data.hits;
-          setImages(prewImages => [...prewImages, ...images]);
+    axios
+      .get(
+        `https://pixabay.com/api/?q=${value.value}&page=${page}&key=${PIXABAY_KEY}&image_type=photo&orientation=horizontal&per_page=12`
+      )
+      .catch(error => console.log('Error', error.message))
+      .then(responce => {
+        const images = responce.data.hits;
+        setImages(prewImages => [...prewImages, ...images]);
         setTotalPages(responce.data.totalHits / 12);
       })
       .finally(() => setStateMashine('loaded'));
   }, [value, page]);
 
   const toggleModal = () => {
-    setShowModal( showModal => !showModal );
+    setShowModal(showModal => !showModal);
   };
 
-  addPage = page => {
-    setPage( page => page + 1 );
+  const addPage = page => {
+    setPage(page => page + 1);
   };
 
   const addToState = value => {
@@ -56,10 +56,9 @@ function App () {
   };
 
   const addLargeImg = e => {
-    setLargeImage (e.target.getAttribute('id'));
+    setLargeImage(e.target.getAttribute('id'));
     toggleModal();
   };
-
     return (
       <div className="App">
         <SearchBar onSubmit={value => addToState(value)} />

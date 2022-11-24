@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState} from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -18,7 +18,7 @@ function SearchBar({ onSubmit}) {
     setValue(e.target.value.toLowerCase());
   };
 
-  handleSubmit = evt => {
+  const handleSubmit = evt => {
     evt.preventDefault();
     if (value.trim() === '') {
       alert('Введите данные для поиска');
