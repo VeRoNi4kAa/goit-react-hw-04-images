@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 import { Overlay, ModalWindow } from './Modal.styled';
 
-function Modal({ onClose, largeImage}) {
+function Modal({ onClose, largeImage }) {
   useEffect(() => {
-    window.addEventListener('keydown', this.handleKeydown);
+    window.addEventListener('keydown', handleKeydown);
     return function cleanup() {
       window.removeEventListener('keydown', handleKeydown);
     };
@@ -20,19 +20,18 @@ function Modal({ onClose, largeImage}) {
 
   const handleBackdropClick = e => {
     if (e.currentTarget === e.target) {
-     onClose();
+      onClose();
     }
   };
 
-    return (
-      <Overlay onClick={handleBackdropClick}>
-        <ModalWindow>
-          <img src={largeImage} alt="" />
-        </ModalWindow>
-      </Overlay>
-    );
-  }
-
+  return (
+    <Overlay onClick={handleBackdropClick}>
+      <ModalWindow>
+        <img src={largeImage} alt="" />
+      </ModalWindow>
+    </Overlay>
+  );
+}
 
 export default Modal;
 
